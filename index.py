@@ -2,9 +2,10 @@ import random
 import pygame
 import sys
 import time
+from matplotlib import pyplot
 
 change = True
-sleep_time = 0.15
+sleep_time = 0.01
 
 #세팅
 rooms = [0,0,0]
@@ -191,6 +192,9 @@ human_position = (320,380)
 
 count = 0
 
+x = [];
+y = {"성공": [], "실패": []};
+
 while running:
     for event in pygame.event.get(): #이벤트의 발생 여부에 따른 반복문
         if event.type == pygame.QUIT: #창을 닫는 이벤트 발생했는가?
@@ -242,6 +246,16 @@ while running:
     
     print(success_count)
     print(f"count : {count}")
+    
+    x.append(count)
+    y["성공"].append(success_count["성공"])
+    y["실패"].append(success_count["실패"])
+    
+    pyplot.plot(x, y["성공"])
+    pyplot.plot(x, y["실패"])
+    pyplot.pause(sleep_time)
+    
+pyplot.show()
     
 print(f"성공률 : {success_count['성공'] / (success_count['성공'] + success_count['실패']) * 100}%")
 sys.exit()
